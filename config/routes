@@ -4,3 +4,5 @@
 /robots.txt RobotsR GET
 
 /jogos/genero/#GenerosId JogosGeneroR GET
+/jogos/desenvolvedor/#DesenvolvedoresId/genero/#GenerosId JogosDevGeneroR GET
+/generos GenerosR OPTIONS GET

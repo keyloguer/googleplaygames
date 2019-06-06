@@ -17,6 +17,16 @@ data JogosData = JogosData Jogos Desenvolvedores Classificacoes Generos deriving
 data Jogo = Jogo { titulo :: Text, desenvolvedorId :: DesenvolvedoresId } deriving (Show ,Generic, ToJSON, FromJSON)
 data Desenvolvedor = Desenvolvedor { ds_desenvolvedor :: Text, emailDesenvolvedor :: Text }  deriving (Show ,Generic, ToJSON, FromJSON)
 
+optionsGenerosR :: Handler ()
+optionsGenerosR = headers
+
+-- Retornar lista de generos para montar pesquisa por genero
+getGenerosR :: Handler Value
+getGenerosR = do
+        addHeader "Access-Control-Allow-Origin" "*"
+        generos <- runDB $ selectList [] [Asc GenerosGenero]
+        returnJson $ generos
+        
 optionsJogosDevGeneroR :: Handler ()
 optionsJogosDevGeneroR = headers
 
