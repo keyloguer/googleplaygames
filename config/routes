@@ -6,3 +6,5 @@
 /jogos/genero/#GenerosId JogosGeneroR GET
 /jogos/desenvolvedor/#DesenvolvedoresId/genero/#GenerosId JogosDevGeneroR GET
 /generos GenerosR OPTIONS GET
+
+/classificacoes ClassificacoesR OPTIONS GET
