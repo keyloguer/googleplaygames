@@ -66,3 +66,10 @@ postJogosDevR = do
         insertKey ultKey jogo
         return ultKey
     sendStatusJSON created201 (object ["jogoId" .= ultKey])
+    
+putJogosIdR :: JogosId -> Handler TypedContent -- função que recebe jogos id devolve nada
+putJogosIdR jogoId = do                        --
+    addHeader "Access-Control-Allow-Origin" "*"
+    jogo <- requireJsonBody :: Handler Jogos
+    runDB $ replace jogoId jogo
+    sendStatusJSON noContent204 (Aviso "editado")
