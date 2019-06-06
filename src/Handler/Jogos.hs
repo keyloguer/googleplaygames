@@ -9,11 +9,15 @@
 {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
 module Handler.Jogos where
 import           Data.Text               (Text)
+import Handler.Funcs
 import Import
 import GHC.Generics
 
 data JogosData = JogosData Jogos Desenvolvedores Classificacoes Generos deriving (Show ,Generic, ToJSON, FromJSON)
-    
+
+optionsJogosR :: Handler ()
+optionsJogosR = headers
+
 getJogosR :: Handler Value
 getJogosR = do
         addHeader "Access-Control-Allow-Origin" "*"
