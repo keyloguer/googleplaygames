@@ -1,0 +1,35 @@
+Desenvolvedores json
+	ds_desenvolvedor Text
+	emailDesenvolvedor Text 
+	webSiteDesenvolvedor Text
+    deriving Eq
+    deriving Show
+
+Jogos json
+	desenvolvedorid DesenvolvedoresId
+	url Text
+	titulo Text
+	descricao Text
+	sumario Text
+	quantidadeDownloads Int
+	quantidadeClassificacoes Int
+	score Double
+	generoId GenerosId 
+	classificacaoId ClassificacoesId
+	descricaoConteudo Text
+	adSupported Bool
+	preco Double
+	free Bool
+	offersIap Bool
+	deriving Eq
+    deriving Show
+
+Generos json
+	genero Text
+	deriving Eq
+    deriving Show
+
+Classificacoes json
+	classificacao Text
+    deriving Eq
+    deriving Show
