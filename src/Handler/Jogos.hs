@@ -16,6 +16,8 @@ import Database.Persist.Sql (toSqlKey, fromSqlKey)
 
 data JogosData = JogosData Jogos Desenvolvedores Classificacoes Generos deriving (Show ,Generic, ToJSON, FromJSON)
 
+data Aviso = Aviso Text deriving (Show ,Generic, ToJSON, FromJSON)
+
 optionsJogosR :: Handler ()
 optionsJogosR = headers
 
