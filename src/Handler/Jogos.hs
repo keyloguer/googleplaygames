@@ -12,6 +12,7 @@ import           Data.Text               (Text)
 import Handler.Funcs
 import Import
 import GHC.Generics
+import Database.Persist.Sql (toSqlKey, fromSqlKey)
 
 data JogosData = JogosData Jogos Desenvolvedores Classificacoes Generos deriving (Show ,Generic, ToJSON, FromJSON)
 
