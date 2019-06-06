@@ -12,3 +12,4 @@
 
 /todos/jogos JogosR OPTIONS GET
 /jogos JogosDevR OPTIONS GET POST
+/jogos/#JogosId JogosIdR OPTIONS PUT
