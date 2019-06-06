@@ -54,3 +54,14 @@ getJogosDevR = do
                                             cla <- get404 claid
                                             gen  <- get404 genid
                                             return $ (dev,cla,gen)
+                                            
+postJogosDevR :: Handler Value
+postJogosDevR = do
+    addHeader "Access-Control-Allow-Origin" "*"
+    jogo <- requireJsonBody :: Handler Jogos
+    ultKey <- runDB $ do
+        Just ultJogo <- selectFirst [] [Desc JogosId]
+        let ultKey = toSqlKey . (+1) . fromSqlKey . entityKey $ ultJogo
+        insertKey ultKey jogo
+        return ultKey
+    sendStatusJSON created201 (object ["jogoId" .= ultKey])
