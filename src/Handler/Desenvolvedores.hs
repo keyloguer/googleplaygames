@@ -12,6 +12,9 @@ import           Data.Text               (Text)
 import Import
 import Handler.Funcs
 
+optionsDesenvolvedoresR :: Handler ()
+optionsDesenvolvedoresR = headers
+
 getDesenvolvedoresR :: Handler Value
 getDesenvolvedoresR = do
         addHeader "Access-Control-Allow-Origin" "*"
