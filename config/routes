@@ -11,3 +11,4 @@
 /desenvolvedores DesenvolvedoresR OPTIONS GET
 
 /todos/jogos JogosR OPTIONS GET
+/jogos JogosDevR OPTIONS GET
