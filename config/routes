@@ -8,3 +8,4 @@
 /generos GenerosR OPTIONS GET
 
 /classificacoes ClassificacoesR OPTIONS GET
+/desenvolvedores DesenvolvedoresR OPTIONS GET
