@@ -79,3 +79,9 @@ putJogosIdR jogoId = do
     jogo <- requireJsonBody :: Handler Jogos
     runDB $ replace jogoId jogo
     sendStatusJSON noContent204 (Aviso "editado")
+    
+deleteJogosIdR :: JogosId -> Handler TypedContent
+deleteJogosIdR jogoId = do
+    addHeader "Access-Control-Allow-Origin" "*"
+    runDB $ delete jogoId
+    sendStatusJSON noContent204 (Aviso "deletado")
