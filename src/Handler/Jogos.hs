@@ -14,6 +14,7 @@ import Import
 import GHC.Generics
 import Database.Persist.Sql (toSqlKey, fromSqlKey)
 
+
 data JogosData = JogosData Jogos Desenvolvedores Classificacoes Generos deriving (Show ,Generic, ToJSON, FromJSON)
 
 data Aviso = Aviso Text deriving (Show ,Generic, ToJSON, FromJSON)
@@ -27,7 +28,7 @@ getJogosR = do
         generos <- runDB $ selectList [] [Asc GenerosGenero]
         generosId <- return $ fmap entityKey generos
         jogosCategoria <- mapM (\genId -> runDB $ selectList [JogosGeneroId ==. genId] [Asc JogosTitulo, LimitTo 16]) generosId
-        foo <- sequence $ map (\ jogos -> sequence $ map (\ jogo@(Entity jid (Jogos did _ _ _ _ _ _ _ genid clid _ _ _ _ _)) -> do 
+        foo <- sequence $ map (\ jogos -> sequence $ map (\ jogo@(Entity _ (Jogos did _ _ _ _ _ _ _ genid clid _ _ _ _ _)) -> do 
                 (dev, cla, gen) <- select did clid genid
                 return $ JogosData (entityVal jogo) dev cla gen
                 ) jogos )  jogosCategoria
@@ -46,7 +47,7 @@ getJogosDevR :: Handler Value
 getJogosDevR = do
         addHeader "Access-Control-Allow-Origin" "*"
         jogos <- runDB $ selectList [] [Asc JogosTitulo, LimitTo 500]
-        jogosComInnerJoin <- mapM (\ jogo@(Entity jid (Jogos did _ _ _ _ _ _ _ genid clid _ _ _ _ _)) -> do 
+        jogosComInnerJoin <- mapM (\ jogo@(Entity _ (Jogos did _ _ _ _ _ _ _ genid clid _ _ _ _ _)) -> do 
                              (dev, cla, gen) <- select did clid genid
                              return $ JogosData (entityVal jogo) dev cla gen
                              ) jogos
@@ -57,7 +58,27 @@ getJogosDevR = do
                                             cla <- get404 claid
                                             gen  <- get404 genid
                                             return $ (dev,cla,gen)
-                                            
+
+optionsJogosTituloGeneroR :: Text -> GenerosId ->Handler ()
+optionsJogosTituloGeneroR _ _ = headers
+
+getJogosTituloGeneroR :: Text -> GenerosId -> Handler Value
+getJogosTituloGeneroR titulo genId = do
+        addHeader "Access-Control-Allow-Origin" "*"
+        jogos <- runDB $ selectList [JogosTitulo %=. titulo, JogosGeneroId ==. genId] [Asc JogosTitulo]
+        jogosComInnerJoin <- mapM (\ jogo@(Entity _ (Jogos did _ _ _ _ _ _ _ genid clid _ _ _ _ _)) -> do 
+                             (dev, cla, gen) <- select did clid genid
+                             return $ JogosData (entityVal jogo) dev cla gen
+                             ) jogos
+        sendStatusJSON ok200 (toJSON $ jogosComInnerJoin)
+        where select :: DesenvolvedoresId -> ClassificacoesId -> GenerosId -> Handler (Desenvolvedores,Classificacoes,Generos)
+              select did claid genid = runDB $ do 
+                                            dev <- get404 did 
+                                            cla <- get404 claid
+                                            gen  <- get404 genid
+                                            return $ (dev,cla,gen)
+
+
 postJogosDevR :: Handler Value
 postJogosDevR = do
     addHeader "Access-Control-Allow-Origin" "*"
