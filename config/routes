@@ -9,3 +9,5 @@
 
 /classificacoes ClassificacoesR OPTIONS GET
 /desenvolvedores DesenvolvedoresR OPTIONS GET
+
+/todos/jogos JogosR OPTIONS GET
