@@ -35,6 +35,9 @@ getJogosR = do
                                             cla <- get404 claid
                                             gen  <- get404 genid
                                             return $ (dev,cla,gen)
+                                            
+optionsJogosDevR :: Handler ()
+optionsJogosDevR = headers
 
 getJogosDevR :: Handler Value
 getJogosDevR = do
